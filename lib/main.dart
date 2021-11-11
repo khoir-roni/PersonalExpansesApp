@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses_app/widgets/user_transaction.dart';
+// import 'package:personal_expenses_app/widgets/user_transaction.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
+import './models/transaction.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -19,25 +20,59 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final titleController = TextEditingController();
+  // final titleController = TextEditingController();
 
-  final amountController = TextEditingController();
+  // final amountController = TextEditingController();
 
-  // void startAddNewTransaction(BuildContext ctx) {
-  //   showModalBottomSheet(
-  //     context: ctx,
-  //     builder: (_) {
-  //       return NewTransaction(addTx);
-  //     },
-  //   );
-  // }
+  final List<Transaction> _userTransaction = [
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Weekly Groceries',
+      amount: 16.53,
+      date: DateTime.now(),
+    ),
+  ];
+  void _addNewTransaction(String txTitle, double txAmount) {
+    final newTx = Transaction(
+      title: txTitle,
+      amount: txAmount,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+    );
+    setState(() {
+      _userTransaction.add(newTx);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Personal Expanses App'),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () => _startAddNewTransaction(context),
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -51,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                   child: Text('Chart'),
                 ),
               ),
-              UserTransaction(),
+              TransactionList(_userTransaction),
             ],
           ),
         ),
@@ -59,7 +94,7 @@ class _MyAppState extends State<MyApp> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
