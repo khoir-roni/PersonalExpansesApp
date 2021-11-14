@@ -98,6 +98,14 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +130,7 @@ class _MyAppState extends State<MyApp> {
               //     child: Text('Chart'),
               //   ),
               // ),
-              TransactionList(_userTransaction),
+              TransactionList(_userTransaction, _deleteTransaction),
             ],
           ),
         ),
