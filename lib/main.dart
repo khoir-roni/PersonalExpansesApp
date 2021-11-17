@@ -14,33 +14,35 @@ void main() {
   // WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations(
   //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Personal Expanses App',
-    theme: ThemeData(
-      primarySwatch: Colors.purple,
-      accentColor: Colors.amber,
-      fontFamily: 'QuickSans',
-      textTheme: ThemeData.light().textTheme.copyWith(
-            headline6: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            button: TextStyle(color: Colors.white),
-          ),
-      appBarTheme: AppBarTheme(
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Personal Expanses App',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
+        fontFamily: 'QuickSans',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                 fontFamily: 'OpenSans',
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              button: TextStyle(color: Colors.white),
             ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
       ),
+      home: MyApp(),
     ),
-    home: MyApp(),
-  ));
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -159,7 +161,10 @@ class _MyAppState extends State<MyApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Show Chart'),
+                  Text(
+                    'Show Chart',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                   Switch.adaptive(
                       value: _showChart,
                       onChanged: (val) {
