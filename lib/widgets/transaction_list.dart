@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import '../widgets/transaction_item.dart';
@@ -30,12 +32,20 @@ class TransactionList extends StatelessWidget {
               );
             },
           )
-        : ListView.builder(
-            itemCount: transactions.length,
-            itemBuilder: (BuildContext context, int index) {
-              return TransactionItem(transaction: transactions[index], deleteTx: deleteTx);
-            },
+        : ListView(
+            children: transactions
+                .map((tx) => TransactionItem(
+                  key: UniqueKey(),
+                      transaction: tx,
+                      deleteTx: deleteTx,
+                    ))
+                .toList(),
           );
+    // : ListView.builder(
+    //     itemCount: transactions.length,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return TransactionItem(transaction: transactions[index], deleteTx: deleteTx);
+    //     },
+    //   );
   }
 }
-
